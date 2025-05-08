@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <h2>Health Data Input</h2>
+        <form method="POST">
+            {% for feature in feature_names %}
+                <label for="{{ feature }}">{{ feature }}:</label>
+                {% if feature in label_encoders %}
+                    <select id="{{ feature }}" name="{{ feature }}">
+                        {% for category in label_encoders[feature].classes_ %}
+                            <option value="{{ category }}">{{ category }}</option>
+                        {% endfor %}
+                    </select>
+                {% else %}
+                    <input type="number" id="{{ feature }}" name="{{ feature }}" step="any" required>
+                {% endif %}
+            {% endfor %}
+            <button type="submit">Submit</button>
+        </form>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .top-half, .bottom-half {
+            width: 100%;
+            height: 50%;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        .top-half {
+            background-color: #f0f4f8;
+        }
+
+        .bottom-half {
+            background-color: #ffffff;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .chart {
+            width: 45%;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 15px;
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- TOP HALF: Results -->
+        <div class="top-half">
+            <h2>🛌 Health Prediction Result</h2>
+            <p><strong>Predicted Sleep Disorder:</strong> {{ prediction }}</p>
+
+            <h3>🩺 Personalized Recommendations:</h3>
+            <ul>
+                {% for rec in recommendations %}
+                    <li>{{ rec }}</li>
+                {% endfor %}
+            </ul>
+
+            <a href="{{ url_for('dashboard') }}">← Go back to Dashboard</a>
+        </div>
+
+        <!-- BOTTOM HALF: Graphs side by side -->
+        <div class="bottom-half">
+            <div class="chart">{{ pie_chart | safe }}</div>
+            <div class="chart">{{ bar_chart | safe }}</div>
+        </div>
+
+    </div>
+</body>
+</html>
